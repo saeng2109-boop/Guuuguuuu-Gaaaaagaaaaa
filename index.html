@@ -1,11 +1,163 @@
 <!DOCTYPE html>
-<html>
+<html lang="de">
 <head>
-  <meta charset="UTF-8">
-  <title>Test</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Für meine Prinzessin 💖</title>
+
+<style>
+    body {
+        margin: 0;
+        font-family: 'Arial', sans-serif;
+        background: linear-gradient(180deg, #ffe6f0, #ffffff);
+        overflow: hidden;
+        text-align: center;
+    }
+
+    .page {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        opacity: 0;
+        transition: opacity 1s ease;
+        pointer-events: none;
+    }
+
+    .page.active {
+        opacity: 1;
+        pointer-events: all;
+    }
+
+    h1 {
+        padding: 0 20px;
+    }
+
+    img {
+        width: 220px;
+        margin: 20px 0;
+    }
+
+    .buttons {
+        display: flex;
+        gap: 20px;
+        margin-top: 20px;
+        position: relative;
+    }
+
+    button {
+        padding: 12px 24px;
+        font-size: 18px;
+        border: none;
+        border-radius: 30px;
+        cursor: pointer;
+        transition: transform 0.3s;
+    }
+
+    .yes {
+        background: #ff5fa2;
+        color: white;
+    }
+
+    .no {
+        background: #ccc;
+        position: relative;
+    }
+
+    /* Herzen */
+    .heart {
+        position: absolute;
+        bottom: -20px;
+        font-size: 24px;
+        animation: floatUp 6s linear infinite;
+    }
+
+    @keyframes floatUp {
+        0% { transform: translateY(0); opacity: 1; }
+        100% { transform: translateY(-120vh); opacity: 0; }
+    }
+
+    .weiter {
+        margin-top: 30px;
+        display: none;
+    }
+</style>
 </head>
 <body>
-  <h1>🎉 ES FUNKTIONIERT 🎉</h1>
-  <p>Wenn du das siehst, ist GitHub Pages korrekt aktiv.</p>
+
+<!-- Seite 1 -->
+<div class="page active">
+    <h1>Weißt du wer die allerschönste Prinzessin ist?</h1>
+    <img src="https://upload.wikimedia.org/wikipedia/en/7/7c/Belle_disney.png">
+    <div class="buttons">
+        <button class="yes" onclick="nextPage(1)">Ja</button>
+        <button class="no" onclick="moveNo(this)">Nein</button>
+    </div>
+</div>
+
+<!-- Seite 2 -->
+<div class="page">
+    <h1>Weißt du wer die allerbeste Freundin ist?</h1>
+    <div class="buttons">
+        <button class="yes" onclick="nextPage(2)">Ja</button>
+        <button class="no" onclick="moveNo(this)">Nein</button>
+    </div>
+</div>
+
+<!-- Seite 3 -->
+<div class="page">
+    <h1>Richtig, DU bist es! 💖</h1>
+    <div id="hearts"></div>
+    <button class="yes weiter" onclick="nextPage(3)">Weiter</button>
+</div>
+
+<!-- Seite 4 -->
+<div class="page">
+    <h1>Willst du mein Pinguin sein? 🐧</h1>
+    <img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAASABIAAD/4QCARXhpZgAATU0AKgAAAAgABQESAAMAAAABAAEAAAEaAAUAAAABAAAASgEbAAUAAAABAAAA...">
+    <div class="buttons">
+        <button class="yes" onclick="nextPage(4)">Ja</button>
+        <button class="no" onclick="moveNo(this)">Nein</button>
+    </div>
+</div>
+
+<!-- Seite 5 -->
+<div class="page">
+    <h1>Yeah yeah, aber ich wusste, dass du Ja drückst 😉💙</h1>
+</div>
+
+<script>
+    const pages = document.querySelectorAll('.page');
+
+    function nextPage(index) {
+        pages[index - 1].classList.remove('active');
+        pages[index].classList.add('active');
+
+        if(index === 2) startHearts();
+    }
+
+    function moveNo(btn) {
+        btn.style.transform =
+            `translate(${Math.random()*200 - 100}px, ${Math.random()*200 - 100}px)`;
+    }
+
+    function startHearts() {
+        const container = document.getElementById('hearts');
+        for (let i = 0; i < 30; i++) {
+            const heart = document.createElement('div');
+            heart.className = 'heart';
+            heart.innerHTML = Math.random() > 0.5 ? '❤️' : '🎆';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = (4 + Math.random() * 3) + 's';
+            container.appendChild(heart);
+        }
+        setTimeout(() => {
+            document.querySelector('.weiter').style.display = 'inline-block';
+        }, 10000);
+    }
+</script>
+
 </body>
 </html>
